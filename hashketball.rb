@@ -133,75 +133,77 @@ end
 
 
 def num_points_scored(name)
-  points = nil
-  
-  game_hash.each do |team, stats|
-    player_stats = stats[:players]
-    player_stats.each do |stats|
+  points = 0
+  game_hash.each do |team, team_stats|
+    
+    team_stats[:players].each do |stats|
       if stats[:name] == name
         points = stats[:points]
       end
     end
   end
   points
-  
 end
 
 def shoe_size(name)
-shoe_size = nil
+shoe_size = 0 
 
-game_hash.each do |team, stats|
-  player_stats = stats[:players]
-  player_stats.each do |stats|
+game_hash.each do |team, team_stats|
+  
+  team_stats[:players].each do |stats|
     if stats[:name] == name
       shoe_size = stats[:shoe]
     end
   end
-  
 end
 shoe_size
+  
+
 end
 
 
 def team_colors(team_name)
-  colors = nil
-  if team_name == "Brooklyn Nets"
-    colors = game_hash[:home][:colors]
-  elsif team_name == "Charlotte Hornets"
-    colors = game_hash[:away][:colors]
-  else
-
-  end
-  colors 
-end
-
-def team_names
-  game_hash.collect do |team, team_stats|
-    team_stats[:team_name] 
-  end
-end
-
-
-
-def player_numbers(team_name)
-  player_number = []
   
+  if team_name == game_hash[:home][:team_name]
+    game_hash[:home][:colors]
+    
+  else team_name == game_hash[:away][:team_name]
+    game_hash[:away][:colors]
+    
+  end
+end
+
+def team_names #returns the team names
+  game_hash.collect do |team, team_stats|
+    team_stats[:team_name]
+  end
+  
+end
+
+
+
+
+def player_numbers(team_name) #returns the player jersey numbers
+  player_numbers = []
   game_hash.each do |team, team_stats|
     if team_stats[:team_name] == team_name
       team_stats[:players].each do |player|
         player.each do |key, number|
           if key == :number
-            player_number << number
+            player_numbers << number
           end
         end
       end
     end
   end
-  player_number
+  player_numbers
 end
 
-def player_stats(name)
-  player_stats = nil
+
+
+
+def player_stats(name) #returns all stats for a given player
+  player_stats = 0
   game_hash.each do |team, team_stats|
     team_stats[:players].each do |stats|
       if stats[:name] == name
@@ -213,19 +215,21 @@ def player_stats(name)
   player_stats
 end
 
-def big_shoe_rebounds
+
+def big_shoe_rebounds #returns the number of rebounds of the player with the biggest shoe size
   biggest_shoe = 0 
   rebounds = 0 
   game_hash.each do |team, team_stats|
-      team_stats[:players].each do |stats|
-        if stats[:shoe] > biggest_shoe
-          biggest_shoe = stats[:shoe]
-          rebounds = stats[:rebounds]          
-        end
+    team_stats[:players].each do |stats|
+      if stats[:shoe] > biggest_shoe
+        biggest_shoe = stats[:shoe]
+        rebounds = stats[:rebounds]
       end
+    end
   end
   rebounds
 end
+
 
 
 
