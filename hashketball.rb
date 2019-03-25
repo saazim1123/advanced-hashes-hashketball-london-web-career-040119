@@ -247,10 +247,6 @@ end
 
 
 
-
-
-
-
 =begin
 
 def good_practices
