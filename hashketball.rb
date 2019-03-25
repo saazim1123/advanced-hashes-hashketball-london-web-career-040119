@@ -202,8 +202,12 @@ def player_numbers(team_name) #returns the player jersey numbers
  game_hash.each do |team, team_stats| # I iterate through the game_hash
     if team_stats[:team_name] == team_name  #if the team_name has the correct argument
     
-      team_stats[:players].collect do |stats| # I use the .collect emunerable to pick out the number key
+      team_stats[:players].each do |stats| # I use the .collect emunerable to pick out the number key
         number << stats[:number] # the player number is then pushed to the number array
+      end
+      
+      number = team_stats[:players].collect do |stats| # I use the .collect emunerable to pick out the number key
+        stats[:number] # the player number is then pushed to the number array
       end
     end
  end
