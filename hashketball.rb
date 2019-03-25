@@ -132,12 +132,13 @@ def game_hash
 end
 
 
-def num_points_scored(name)
-  points = 0
+def num_points_scored(name) # knows the number of points scored by each player
+
+  points = 0 # This is the variable i want to return at the end of the code
+  
   game_hash.each do |team, team_stats|
-    
     team_stats[:players].each do |stats|
-      if stats[:name] == name
+      if stats[:name] == name #The player name in the hash has to match the name argument
         points = stats[:points]
       end
     end
@@ -145,90 +146,106 @@ def num_points_scored(name)
   points
 end
 
-def shoe_size(name)
-shoe_size = 0 
 
-game_hash.each do |team, team_stats|
+def shoe_size(name) #knows the shoe size of each player
+# Coding is identical to num_points_scored, only information you extract here is from the :shoe key
+
+  shoes = 0
   
-  team_stats[:players].each do |stats|
-    if stats[:name] == name
-      shoe_size = stats[:shoe]
+  game_hash.each do |team, team_stats|
+    team_stats[:players].each do |stats|
+      if stats[:name] == name
+        shoes = stats[:shoe]
+      end
     end
   end
-end
-shoe_size
-  
-
+ shoes
 end
 
 
-def team_colors(team_name)
-  
-  if team_name == game_hash[:home][:team_name]
-    game_hash[:home][:colors]
+def team_colors(team_name) #knows the Brooklyn Nets colors are Black and White
+
+#if/else statement helps check if the information is correct and returns the right information when correct
+
+  if team_name == game_hash[:home][:team_name] # Checks if the team_name argument is Brooklyn Nets
+    game_hash[:home][:colors] #if correct it returns the team colours of that team
     
-  else team_name == game_hash[:away][:team_name]
+  elsif team_name == game_hash[:away][:team_name]
     game_hash[:away][:colors]
     
+  else
+    puts "Invalid team name"
   end
+
 end
 
+
 def team_names #returns the team names
-  game_hash.collect do |team, team_stats|
-    team_stats[:team_name]
-  end
-  
+
+# I use the .collect emunerable so it returns the :team_name values of the hash
+ 
+ game_hash.collect do |team, team_stats| # You can use .map as well
+   team_stats[:team_name]
+ end
+ 
 end
+
+
 
 
 
 
 def player_numbers(team_name) #returns the player jersey numbers
-  player_numbers = []
-  game_hash.each do |team, team_stats|
-    if team_stats[:team_name] == team_name
-      team_stats[:players].each do |player|
-        player.each do |key, number|
-          if key == :number
-            player_numbers << number
-          end
-        end
+
+ number = [] # Since the idea is to return all the jersey numbers of a team, I use an array to store the results
+ 
+ game_hash.each do |team, team_stats| # I iterate through the game_hash
+    if team_stats[:team_name] == team_name  #if the team_name has the correct argument
+    
+      team_stats[:players].collect do |stats| # I use the .collect emunerable to pick out the number key
+        number << stats[:number] # the player number is then pushed to the number array
       end
     end
-  end
-  player_numbers
+ end
+ number # Returns the variable with the player jerseys
 end
 
 
 
 
 def player_stats(name) #returns all stats for a given player
-  player_stats = 0
-  game_hash.each do |team, team_stats|
-    team_stats[:players].each do |stats|
-      if stats[:name] == name
-        stats.delete(:name)
-        player_stats = stats
-      end
-    end
-  end
-  player_stats
+ 
+ all_stats = 0 #Empty Variable to return at the end
+ 
+ game_hash.each do |team, team_stats| 
+   team_stats[:players].each do |stats|
+     if stats[:name] == name
+       stats.delete(:name) # Had to delete the name key because otherwise the code doesnt work since it wants all the stats except the name of the player
+       all_stats = stats
+     end
+   end
+ end
+ all_stats
 end
 
 
 def big_shoe_rebounds #returns the number of rebounds of the player with the biggest shoe size
-  biggest_shoe = 0 
+  biggest_shoe = 0 # Two variables are needed
   rebounds = 0 
+  
   game_hash.each do |team, team_stats|
     team_stats[:players].each do |stats|
-      if stats[:shoe] > biggest_shoe
+      if stats[:shoe] > biggest_shoe 
         biggest_shoe = stats[:shoe]
         rebounds = stats[:rebounds]
       end
     end
   end
-  rebounds
+  rebounds 
 end
+
+
+
 
 
 
