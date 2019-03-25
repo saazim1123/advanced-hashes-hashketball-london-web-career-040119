@@ -224,7 +224,7 @@ def player_stats(name) #returns all stats for a given player
  game_hash.each do |team, team_stats| 
    team_stats[:players].each do |stats|
      if stats[:name] == name
-       stats.delete(:name) # Had to delete the name key because otherwise the code doesnt work since it wants all the stats except the name of the player
+        # Had to delete the name key because otherwise the code doesnt work since it wants all the stats except the name of the player
        all_stats = stats
      end
    end
