@@ -226,6 +226,7 @@ def player_stats(name) #returns all stats for a given player
      if stats[:name] == name
        stats.delete(:name) # Had to delete the name key because otherwise the code doesnt work since it wants all the stats except the name of the player
        all_stats = stats
+       
      end
    end
  end
